@@ -1,0 +1,83 @@
+---
+# - name: Install Dependencies to build php
+#   command: apt-get -y build-dep php5
+
+- name: Install php and its modules
+  apt: pkg={{ item }} state=latest
+  with_items:
+    - php5
+    - php5-cli
+    - php5-curl
+    - php5-dev
+    - php5-fpm
+    - php5-gd
+    - php5-imagick
+    - php5-mysql
+    - php5-xdebug
+    - php5-xmlrpc
+    # - php-pear
+    # - autoconf
+    # - automake
+    # - libxslt1-dev
+    # - re2c
+    # - libxml2
+    # - libxml2-dev
+    # - bison
+    # - libbz2-dev
+    # - libreadline-dev
+    # - libfreetype6
+    # - libfreetype6-dev
+    # - libpng12-0
+    # - libpng12-dev
+    # - libjpeg-dev
+    # - libjpeg8-dev
+    # - libjpeg8
+    # - libgd-dev
+    # - libgd3
+    # - libxpm4
+    # - libltdl7
+    # - libltdl-dev
+    # - libssl-dev
+    # - openssl
+    # - gettext
+    # - libgettextpo-dev
+    # - libgettextpo0
+    # - libicu-dev
+    # - libmhash-dev
+    # - libmhash2
+    # - libmcrypt-dev
+    # - libmcrypt4
+
+# - name: Get phpbrew
+#   get_url: url=https://github.com/phpbrew/phpbrew/raw/master/phpbrew dest=/home/vagrant
+#
+# - name: Make phpbrew executable
+#   file: path=/home/vagrant/phpbrew state=touch mode="u+x,g+x,o+x"
+#
+# - name: Move phpbrew to binaries
+#   command: sudo mv phpbrew /usr/bin/phpbrew
+#
+# - name: Init phpbrew
+#   command: phpbrew init
+#   sudo_user: vagrant
+#   sudo: yes
+#   args:
+#     chdir: /home/vagrant/
+#
+# - name: Add PhpBrew config-file to bashrc
+#   lineinfile: dest=/home/vagrant/.bashrc
+#               line='source /home/vagrant/.phpbrew/bashrc'
+#               state=present
+#
+# - name: Execute the source command so that it is activated within the current session
+#   shell: source /home/vagrant/.phpbrew/bashrc executable=/bin/bash
+#
+# - name: Install PHP 5.3 with phpbrew
+#   shell: source /home/vagrant/.phpbrew/bashrc && phpbrew install php-5.3.29 +all executable=/bin/bash
+#   sudo: yes
+#   sudo_user: vagrant
+#
+# - name: Switch to PHP 5.3 with phpbrew
+#   shell: source /home/vagrant/.phpbrew/bashrc && phpbrew switch php-5.3.29 executable=/bin/bash
+#   sudo: yes
+#   sudo_user: vagrant

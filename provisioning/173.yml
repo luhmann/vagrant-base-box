@@ -1,0 +1,14 @@
+---
+    - name: Install box for einsdreiundsiebzig.de
+      hosts: wordpress
+      remote_user: vagrant
+      sudo: yes
+      vars:
+          - project_name: einssiebendrei
+          - nginx_doc_root: /srv/www/{{ project_name }}
+      roles:
+          - common
+          - mysql
+          - nginx
+          - php-fpm
+          - wordpress

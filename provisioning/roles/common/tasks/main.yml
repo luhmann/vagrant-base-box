@@ -1,0 +1,17 @@
+---
+- name: Update apt
+  sudo: yes
+  apt: update_cache=yes upgrade=yes
+
+- name: Install base system packages
+  apt: pkg={{ item }} state=latest update_cache=yes
+  with_items:
+    - build-essential
+    - unzip
+    - curl
+    - htop
+    - vim
+    - python-software-properties
+
+- name: Create /srv/www
+  file: path=/srv/www state=directory

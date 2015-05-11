@@ -1,0 +1,32 @@
+---
+- name: Download WordPress
+  get_url: url=http://wordpress.org/wordpress-{{ wp_version }}.tar.gz dest=/srv/wordpress-{{ wp_version }}.tar.gz
+           sha256sum="{{ wp_sha256sum }}"
+
+- name: Extract archive
+  unarchive: src=/srv/wordpress-{{ wp_version }}.tar.gz dest=/srv/www copy=no
+
+- name: Rename "wordpress"-folder
+  command: mv /srv/www/wordpress {{ nginx_doc_root }} warn=false
+
+- name: Fetch random salts for WordPress config
+  local_action: command curl https://api.wordpress.org/secret-key/1.1/salt/
+  register: "wp_salt"
+  sudo: no
+
+- name: Create WordPress database
+  mysql_db: name={{ wp_db_name }} state=present
+
+- name: Create WordPress database user
+  mysql_user: name={{ wp_db_user }} password={{ wp_db_password }} priv={{ wp_db_name }}.*:ALL host='localhost' state=present
+
+- name: Copy WordPress config file
+  template: src=wp-config.php dest={{ nginx_doc_root }}
+
+- name: Change ownership of WordPress installation
+  file: path={{ nginx_doc_root }} owner=www-data group=www-data state=directory recurse=yes
+
+- name: Create nginx symlink for wordpress
+  file: src=/etc/nginx/sites-available/wordpress dest=/etc/nginx/sites-enabled/wordpress state=link
+  notify:
+      - restart nginx

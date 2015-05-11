@@ -1,0 +1,11 @@
+---
+- name: Install nginx
+  apt: name=nginx state=present
+
+- name: Deactivate default config
+  file: path=/etc/nginx/sites-enabled/default state=absent
+
+- name: Copy nginx configuration for wordpress
+  template: src=wordpress.conf dest=/etc/nginx/sites-available/wordpress
+  notify:
+      - restart nginx
