@@ -81,3 +81,8 @@
 #   shell: source /home/vagrant/.phpbrew/bashrc && phpbrew switch php-5.3.29 executable=/bin/bash
 #   sudo: yes
 #   sudo_user: vagrant
+
+- name: php: Increase memory limit
+   lineinfile: dest=/etc/php5/fpm/php.ini
+               line='memory_limit = 1024M'
+               state=present

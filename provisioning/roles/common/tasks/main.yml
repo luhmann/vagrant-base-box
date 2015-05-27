@@ -15,3 +15,8 @@
 
 - name: Create /srv/www
   file: path=/srv/www state=directory
+
+- name: Put mydevbox on hosts
+   lineinfile: dest=/etc/hosts
+               line='mydevbox   127.0.0.1'
+               state=present
