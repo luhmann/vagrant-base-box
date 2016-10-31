@@ -3,7 +3,7 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # config.vm.box = "parallels/ubuntu-14.04"
-  config.vm.box = "parallels/ubuntu-12.04"
+  config.vm.box = "puphpet/ubuntu1404-x64"
   config.vm.network :private_network, ip: "192.168.50.50"
   config.vm.provision "ansible" do |ansible|
     ansible.verbose = "vv"
